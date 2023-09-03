@@ -40,7 +40,7 @@ anos = st.number_input('Años', value=17)
 rendimiento_promedio = st.number_input('Rendimiento Promedio', value=0.04)
 desviacion_estandar = st.number_input('Desviación Estándar', value=0.10)
 num_simulaciones = st.number_input('Número de Simulaciones', value=1000)
-
+impuesto_rendimientos = st.number_input('Impuesto sobre Rendimientos (%)', value=10.0)
 
 
 # Realizar la simulación y mostrar resultados y gráficos
@@ -81,7 +81,7 @@ if st.button('Realizar Simulación'):
 
 
 
-     # Grafica del monto ahorrado por cada año
+      # Grafica del monto ahorrado por cada año
     monto_ahorrado = [capital_inicial + inversion_anual * ano for ano in range(1, anos + 1)]
     plt.bar(range(1, anos + 1), monto_ahorrado)
     plt.title('Monto Ahorrado por Año')
@@ -92,10 +92,11 @@ if st.button('Realizar Simulación'):
 
     # Grafica de los rendimientos obtenidos por cada año
     monto_acumulado_promedio = np.mean(resultados, axis=0)
-    rendimientos = [monto_acumulado_promedio[0] - monto_ahorrado[0]]
-    rendimientos += [monto_acumulado_promedio[i] - monto_acumulado_promedio[i-1] - inversion_anual for i in range(1, anos)]
-    plt.bar(range(1, anos + 1), rendimientos)
-    plt.title('Rendimientos Obtenidos por Año')
+    rendimientos_brutos = [monto_acumulado_promedio[0] - monto_ahorrado[0]]
+    rendimientos_brutos += [monto_acumulado_promedio[i] - monto_acumulado_promedio[i-1] - inversion_anual for i in range(1, anos)]
+    rendimientos_netos = [rendimiento * (1 - impuesto_rendimientos / 100) for rendimiento in rendimientos_brutos]
+    plt.bar(range(1, anos + 1), rendimientos_netos)
+    plt.title('Rendimientos Obtenidos por Año (neto)')
     plt.xlabel('Año')
     plt.ylabel('Rendimientos')
     st.pyplot(plt)
@@ -103,8 +104,12 @@ if st.button('Realizar Simulación'):
 
     # Grafica del monto acumulado por cada año
     plt.bar(range(1, anos + 1), monto_ahorrado, label='Monto Ahorrado')
-    plt.bar(range(1, anos + 1), rendimientos, bottom=monto_ahorrado, label='Rendimientos')
+    plt.bar(range(1, anos + 1), rendimientos_netos, bottom=monto_ahorrado, label='Rendimientos')
     plt.title('Monto Acumulado por Año')
+    plt.xlabel('Año')
+    plt.ylabel('Monto Acumulado')
+    plt.legend()
+    st.pyplot(plt)
     plt.xlabel('Año')
     plt.ylabel('Monto Acumulado')
     plt.legend()
