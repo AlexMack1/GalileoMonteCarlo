@@ -60,10 +60,10 @@ if st.button('Realizar Simulación'):
     df = pd.DataFrame({
         'Año': range(1, anos + 1),
         'Monto Ahorrado Promedio': np.mean(resultados, axis=0),
-        'Monto Acumulado Promedio': np.mean(np.cumsum(resultados, axis=1), axis=0)
+        'Escenario Pesimista': np.percentile(resultados, 5, axis=0),
+        'Escenario Optimista': np.percentile(resultados, 95, axis=0)
     })
     st.write(df)
-
 
 
 # Realizar la simulación y mostrar gráficos
