@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Variables iniciales
 capital_inicial = 0
@@ -39,6 +40,31 @@ anos = st.number_input('Años', value=17)
 rendimiento_promedio = st.number_input('Rendimiento Promedio', value=0.04)
 desviacion_estandar = st.number_input('Desviación Estándar', value=0.10)
 num_simulaciones = st.number_input('Número de Simulaciones', value=1000)
+
+
+
+# Realizar la simulación
+if st.button('Realizar Simulación'):
+    resultados = montecarlo_simulacion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar, num_simulaciones)
+    rendimiento_promedio_total = round(np.mean([resultado[-1] for resultado in resultados]), 2)
+    monto_promedio_acumulado = round(np.mean([resultado[-1] for resultado in resultados]), 2)
+    escenario_pesimista = round(np.percentile([resultado[-1] for resultado in resultados], 5), 2)
+    escenario_optimista = round(np.percentile([resultado[-1] for resultado in resultados], 95), 2)
+    
+    st.write('Rendimiento Promedio Total:', rendimiento_promedio_total)
+    st.write('Monto Promedio Acumulado:', monto_promedio_acumulado)
+    st.write('Escenario Pesimista:', escenario_pesimista)
+    st.write('Escenario Optimista:', escenario_optimista)
+    
+    # Crear DataFrame para la tabla
+    df = pd.DataFrame({
+        'Año': range(1, anos + 1),
+        'Monto Ahorrado Promedio': np.mean(resultados, axis=0),
+        'Monto Acumulado Promedio': np.mean(np.cumsum(resultados, axis=1), axis=0)
+    })
+    st.write(df)
+
+
 
 # Realizar la simulación y mostrar gráficos
 if st.button('Realizar Simulación y Mostrar Gráficos'):
