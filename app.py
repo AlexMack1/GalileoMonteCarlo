@@ -69,10 +69,10 @@ if st.button('Realizar Simulación'):
 # Realizar la simulación y mostrar gráficos
 if st.button('Realizar Simulación y Mostrar Gráficos'):
     resultados = montecarlo_simulacion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar, num_simulaciones)
-    rendimiento_promedio_total = np.mean([resultado[-1] for resultado in resultados])
-    monto_promedio_acumulado = np.mean([resultado[-1] for resultado in resultados])
-    escenario_pesimista = np.percentile([resultado[-1] for resultado in resultados], 5)
-    escenario_optimista = np.percentile([resultado[-1] for resultado in resultados], 95)
+    rendimiento_promedio_total = round(np.mean([resultado[-1] for resultado in resultados]),0)
+    monto_promedio_acumulado = round(np.mean([resultado[-1] for resultado in resultados]),0)
+    escenario_pesimista = round(np.percentile([resultado[-1] for resultado in resultados], 5),0)
+    escenario_optimista = round(np.percentile([resultado[-1] for resultado in resultados], 95),0)
     
     st.write('Rendimiento Promedio Total:', rendimiento_promedio_total)
     st.write('Monto Promedio Acumulado:', monto_promedio_acumulado)
