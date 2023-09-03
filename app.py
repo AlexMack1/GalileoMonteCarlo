@@ -40,8 +40,8 @@ rendimiento_promedio = st.number_input('Rendimiento Promedio', value=0.04)
 desviacion_estandar = st.number_input('Desviación Estándar', value=0.10)
 num_simulaciones = st.number_input('Número de Simulaciones', value=1000)
 
-# Realizar la simulación
-if st.button('Realizar Simulación'):
+# Realizar la simulación y mostrar gráficos
+if st.button('Realizar Simulación y Mostrar Gráficos'):
     resultados = montecarlo_simulacion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar, num_simulaciones)
     rendimiento_promedio_total = np.mean([resultado[-1] for resultado in resultados])
     monto_promedio_acumulado = np.mean([resultado[-1] for resultado in resultados])
@@ -52,31 +52,29 @@ if st.button('Realizar Simulación'):
     st.write('Monto Promedio Acumulado:', monto_promedio_acumulado)
     st.write('Escenario Pesimista:', escenario_pesimista)
     st.write('Escenario Optimista:', escenario_optimista)
-    
-    # Mostrar gráficos
-    if st.button('Mostrar Gráficos'):
-        # Crear y mostrar gráficos
-        plt.hist([resultado[-1] for resultado in resultados], bins=50)
-        plt.axvline(x=rendimiento_promedio_total, color='r', linestyle='dashed', linewidth=2)
-        plt.axvline(x=escenario_pesimista, color='g', linestyle='dashed', linewidth=2)
-        plt.axvline(x=escenario_optimista, color='y', linestyle='dashed', linewidth=2)
-        plt.title('Distribución de Montos Finales de las Simulaciones')
-        plt.xlabel('Monto Final')
-        plt.ylabel('Frecuencia')
-        st.pyplot(plt)
-        plt.close()
 
-        # Graficar monto ahorrado por cada año
-        plt.plot(range(anos), np.mean(resultados, axis=0))
-        plt.title('Monto Ahorrado Promedio por Año')
-        plt.xlabel('Año')
-        plt.ylabel('Monto Ahorrado')
-        st.pyplot(plt)
-        plt.close()
+    # Crear y mostrar gráficos
+    plt.hist([resultado[-1] for resultado in resultados], bins=50)
+    plt.axvline(x=rendimiento_promedio_total, color='r', linestyle='dashed', linewidth=2)
+    plt.axvline(x=escenario_pesimista, color='g', linestyle='dashed', linewidth=2)
+    plt.axvline(x=escenario_optimista, color='y', linestyle='dashed', linewidth=2)
+    plt.title('Distribución de Montos Finales de las Simulaciones')
+    plt.xlabel('Monto Final')
+    plt.ylabel('Frecuencia')
+    st.pyplot(plt)
+    plt.close()
 
-        # Graficar monto acumulado por cada año
-        plt.plot(range(anos), np.mean(np.cumsum(resultados, axis=1), axis=0))
-        plt.title('Monto Acumulado Promedio por Año')
-        plt.xlabel('Año')
-        plt.ylabel('Monto Acumulado')
-        st.pyplot(plt)
+    # Graficar monto ahorrado por cada año
+    plt.plot(range(anos), np.mean(resultados, axis=0))
+    plt.title('Monto Ahorrado Promedio por Año')
+    plt.xlabel('Año')
+    plt.ylabel('Monto Ahorrado')
+    st.pyplot(plt)
+    plt.close()
+
+    # Graficar monto acumulado por cada año
+    plt.plot(range(anos), np.mean(np.cumsum(resultados, axis=1), axis=0))
+    plt.title('Monto Acumulado Promedio por Año')
+    plt.xlabel('Año')
+    plt.ylabel('Monto Acumulado')
+    st.pyplot(plt)
