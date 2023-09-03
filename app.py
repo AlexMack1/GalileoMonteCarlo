@@ -43,31 +43,8 @@ num_simulaciones = st.number_input('Número de Simulaciones', value=1000)
 
 
 
-# Realizar la simulación
+# Realizar la simulación y mostrar resultados y gráficos
 if st.button('Realizar Simulación'):
-    resultados = montecarlo_simulacion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar, num_simulaciones)
-    rendimiento_promedio_total = round(np.mean([resultado[-1] for resultado in resultados]), 0)
-    monto_promedio_acumulado = round(np.mean([resultado[-1] for resultado in resultados]), 0)
-    escenario_pesimista = round(np.percentile([resultado[-1] for resultado in resultados], 5), 0)
-    escenario_optimista = round(np.percentile([resultado[-1] for resultado in resultados], 95), 0)
-    
-    st.write('Rendimiento Promedio Total:', rendimiento_promedio_total)
-    st.write('Monto Promedio Acumulado:', monto_promedio_acumulado)
-    st.write('Escenario Pesimista:', escenario_pesimista)
-    st.write('Escenario Optimista:', escenario_optimista)
-    
-    # Crear DataFrame para la tabla
-    df = pd.DataFrame({
-        'Año': range(1, anos + 1),
-        'Monto Ahorrado Promedio': np.round(np.mean(resultados, axis=0), 0),
-        'Escenario Pesimista': np.round(np.percentile(resultados, 5, axis=0), 0),
-        'Escenario Optimista': np.round(np.percentile(resultados, 95, axis=0), 0)
-    })
-    st.write(df)
-
-
-# Realizar la simulación y mostrar gráficos
-if st.button('Realizar Simulación y Mostrar Gráficos'):
     resultados = montecarlo_simulacion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar, num_simulaciones)
     rendimiento_promedio_total = round(np.mean([resultado[-1] for resultado in resultados]),0)
     monto_promedio_acumulado = round(np.mean([resultado[-1] for resultado in resultados]),0)
@@ -78,6 +55,18 @@ if st.button('Realizar Simulación y Mostrar Gráficos'):
     st.write('Monto Promedio Acumulado:', monto_promedio_acumulado)
     st.write('Escenario Pesimista:', escenario_pesimista)
     st.write('Escenario Optimista:', escenario_optimista)
+
+    # Crear DataFrame para la tabla
+    df = pd.DataFrame({
+        'Año': range(1, anos + 1),
+        'Monto Ahorrado Promedio': np.round(np.mean(resultados, axis=0), 0),
+        'Escenario Pesimista': np.round(np.percentile(resultados, 5, axis=0), 0),
+        'Escenario Optimista': np.round(np.percentile(resultados, 95, axis=0), 0)
+    })
+    st.write(df)
+
+
+    
 
     # Crear y mostrar gráficos
     plt.hist([resultado[-1] for resultado in resultados], bins=50)
