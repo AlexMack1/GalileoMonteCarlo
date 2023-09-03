@@ -64,7 +64,7 @@ if st.button('Realizar Simulación'):
         plt.xlabel('Monto Final')
         plt.ylabel('Frecuencia')
         st.pyplot(plt)
-        plt.clf()
+        plt.close()
 
         # Graficar monto ahorrado por cada año
         plt.plot(range(anos), np.mean(resultados, axis=0))
@@ -72,7 +72,7 @@ if st.button('Realizar Simulación'):
         plt.xlabel('Año')
         plt.ylabel('Monto Ahorrado')
         st.pyplot(plt)
-        plt.clf()
+        plt.close()
 
         # Graficar monto acumulado por cada año
         plt.plot(range(anos), np.mean(np.cumsum(resultados, axis=1), axis=0))
