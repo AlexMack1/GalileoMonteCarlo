@@ -10,6 +10,7 @@ anos = 17
 rendimiento_promedio = 0.04
 desviacion_estandar = 0.10
 num_simulaciones = 1000
+impuesto_rendimientos = 0.10
 
 # Función para simular un único intento de 17 años de inversión
 def simular_inversion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar):
@@ -40,7 +41,7 @@ anos = st.number_input('Años', value=17)
 rendimiento_promedio = st.number_input('Rendimiento Promedio', value=0.04)
 desviacion_estandar = st.number_input('Desviación Estándar', value=0.10)
 num_simulaciones = st.number_input('Número de Simulaciones', value=1000)
-impuesto_rendimientos = st.number_input('Impuesto sobre Rendimientos (%)', value=10.0)
+impuesto_rendimientos = st.number_input('Impuesto sobre Rendimientos (%)', value=0.10)
 
 
 # Realizar la simulación y mostrar resultados y gráficos
