@@ -99,14 +99,10 @@ if st.button('Realizar Simulación'):
     st.pyplot(plt)
     plt.close()
 
-    # Grafica del monto acumulado por cada año
+ # Grafica del monto acumulado por cada año
     plt.bar(range(1, anos + 1), monto_ahorrado, label='Monto Ahorrado')
     plt.bar(range(1, anos + 1), rendimientos_netos, bottom=monto_ahorrado, label='Rendimientos')
     plt.title('Monto Acumulado por Año')
-    plt.xlabel('Año')
-    plt.ylabel('Monto Acumulado')
-    plt.legend()
-    st.pyplot(plt)
     plt.xlabel('Año')
     plt.ylabel('Monto Acumulado')
     plt.legend()
