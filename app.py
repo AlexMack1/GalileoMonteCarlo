@@ -59,9 +59,9 @@ if st.button('Realizar Simulación'):
     # Crear DataFrame para la tabla
     df = pd.DataFrame({
         'Año': range(1, anos + 1),
-        'Monto Ahorrado Promedio': np.mean(resultados, axis=0),
-        'Escenario Pesimista': np.percentile(resultados, 5, axis=0),
-        'Escenario Optimista': np.percentile(resultados, 95, axis=0)
+        'Monto Ahorrado Promedio': np.round(np.mean(resultados, axis=0), 2),
+        'Escenario Pesimista': np.round(np.percentile(resultados, 5, axis=0), 2),
+        'Escenario Optimista': np.round(np.percentile(resultados, 95, axis=0), 2)
     })
     st.write(df)
 
