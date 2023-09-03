@@ -66,9 +66,7 @@ if st.button('Realizar Simulación'):
     })
     st.write(df)
 
-
-    
-
+   
     # Crear y mostrar gráficos
     plt.hist([resultado[-1] for resultado in resultados], bins=50)
     plt.axvline(x=rendimiento_promedio_total, color='r', linestyle='dashed', linewidth=2)
@@ -79,8 +77,6 @@ if st.button('Realizar Simulación'):
     plt.ylabel('Frecuencia')
     st.pyplot(plt)
     plt.close()
-
-
 
       # Grafica del monto ahorrado por cada año
     monto_ahorrado = [capital_inicial + inversion_anual * ano for ano in range(1, anos + 1)]
