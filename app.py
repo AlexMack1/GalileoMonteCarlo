@@ -46,10 +46,10 @@ num_simulaciones = st.number_input('Número de Simulaciones', value=1000)
 # Realizar la simulación
 if st.button('Realizar Simulación'):
     resultados = montecarlo_simulacion(anos, capital_inicial, inversion_anual, rendimiento_promedio, desviacion_estandar, num_simulaciones)
-    rendimiento_promedio_total = round(np.mean([resultado[-1] for resultado in resultados]), 2)
-    monto_promedio_acumulado = round(np.mean([resultado[-1] for resultado in resultados]), 2)
-    escenario_pesimista = round(np.percentile([resultado[-1] for resultado in resultados], 5), 2)
-    escenario_optimista = round(np.percentile([resultado[-1] for resultado in resultados], 95), 2)
+    rendimiento_promedio_total = round(np.mean([resultado[-1] for resultado in resultados]), 0)
+    monto_promedio_acumulado = round(np.mean([resultado[-1] for resultado in resultados]), 0)
+    escenario_pesimista = round(np.percentile([resultado[-1] for resultado in resultados], 5), 0)
+    escenario_optimista = round(np.percentile([resultado[-1] for resultado in resultados], 95), 0)
     
     st.write('Rendimiento Promedio Total:', rendimiento_promedio_total)
     st.write('Monto Promedio Acumulado:', monto_promedio_acumulado)
@@ -59,9 +59,9 @@ if st.button('Realizar Simulación'):
     # Crear DataFrame para la tabla
     df = pd.DataFrame({
         'Año': range(1, anos + 1),
-        'Monto Ahorrado Promedio': np.round(np.mean(resultados, axis=0), 2),
-        'Escenario Pesimista': np.round(np.percentile(resultados, 5, axis=0), 2),
-        'Escenario Optimista': np.round(np.percentile(resultados, 95, axis=0), 2)
+        'Monto Ahorrado Promedio': np.round(np.mean(resultados, axis=0), 0),
+        'Escenario Pesimista': np.round(np.percentile(resultados, 5, axis=0), 0),
+        'Escenario Optimista': np.round(np.percentile(resultados, 95, axis=0), 0)
     })
     st.write(df)
 
