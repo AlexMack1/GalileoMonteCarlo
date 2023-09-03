@@ -80,7 +80,7 @@ if st.button('Realizar Simulación'):
     plt.close()
 
     # Graficar monto ahorrado por cada año
-    plt.plot(range(anos), np.mean(resultados, axis=0))
+    plt.plot(range(1, anos + 1), np.mean(resultados, axis=0))
     plt.title('Monto Ahorrado Promedio por Año')
     plt.xlabel('Año')
     plt.ylabel('Monto Ahorrado')
@@ -88,11 +88,12 @@ if st.button('Realizar Simulación'):
     plt.close()
 
     # Graficar monto acumulado por cada año
-    plt.plot(range(anos), np.mean(np.cumsum(resultados, axis=1), axis=0))
+    plt.plot(range(1, anos + 1), np.mean(resultados, axis=0))
     plt.title('Monto Acumulado Promedio por Año')
     plt.xlabel('Año')
     plt.ylabel('Monto Acumulado')
     st.pyplot(plt)
+    plt.close()
 
     # Grafica de los rendimientos obtenidos por cada año
     rendimientos = np.mean(resultados, axis=0) - inversion_anual
@@ -112,9 +113,8 @@ if st.button('Realizar Simulación'):
     plt.close()
 
     # Grafica del monto acumulado por cada año
-    plt.bar(range(1, anos + 1), np.mean(np.cumsum(resultados, axis=1), axis=0))
+    plt.bar(range(1, anos + 1), np.mean(resultados, axis=0))
     plt.title('Monto Acumulado por Año')
     plt.xlabel('Año')
     plt.ylabel('Monto Acumulado')
     st.pyplot(plt)
-    
